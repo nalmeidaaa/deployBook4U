@@ -11,5 +11,5 @@ app.use('/uploads', express.static('uploads'));
 app.use('/', routes);
 
 app.listen(process.env.SERVER_PORT, () => {
-    console.log(`Servidor rodando em http://localhost:${process.env.SERVER_PORT}`);
+    console.log(`Servidor rodando em http://${process.env.DB_HOST}:${process.env.SERVER_PORT}`);
 });
