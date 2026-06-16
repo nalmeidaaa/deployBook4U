@@ -62,7 +62,7 @@ export async function initializeDatabase() {
 
 
         await tempConnection.query(`
-            CREATE TABLE categorias (
+            CREATE TABLE categorias IF NOT EXISTS (
                 id_categoria INT auto_increment PRIMARY KEY,
                 nome VARCHAR (50) NOT NULL,
                 descricao VARCHAR(100),
@@ -72,7 +72,7 @@ export async function initializeDatabase() {
 
 
         await tempConnection.query(`
-            CREATE TABLE produtos (
+            CREATE TABLE produtos IF NOT EXISTS (
                 id_produto INT AUTO_INCREMENT PRIMARY KEY,
                 nome VARCHAR(100) NOT NULL,
                 descricao VARCHAR (100),
@@ -86,7 +86,7 @@ export async function initializeDatabase() {
         `);
 
         await tempConnection.query(`
-            CREATE TABLE pedidos (
+            CREATE TABLE pedidos IF NOT EXISTS (
                 id_pedido INT AUTO_INCREMENT PRIMARY KEY,
                 subTotal DECIMAL (18,2) NOT NULL,
                 status ENUM ('Aberto', 'Finalizado', 'Pendente') NOT NULL,
@@ -97,7 +97,7 @@ export async function initializeDatabase() {
             `)
 
         await tempConnection.query(`
-            CREATE TABLE itens_pedido (
+            CREATE TABLE itens_pedido IF NOT EXISTS (
                 idItem INT AUTO_INCREMENT PRIMARY KEY,
                 produtoId INT NOT NULL,
                 pedidoId INT NOT NULL,
