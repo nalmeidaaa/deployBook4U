@@ -16,13 +16,14 @@ const pedidoController = {
             const pedido = Pedido.criar({ subTotal, status: statusPed.ABERTO, quantidade_itens }); //Ele começa com esses valores iniciais assim que o pedido é criado
             const itensPedido = ItensPedido.criar({ produtoId, quantidade, subTotal, valorItem });
 
+            const result = await pedidoRepository.criar(pedido, itensPedido);
 
             return res.status(201).json({
-                result,
+                result
             });
 
         } catch (error) {
-            return res.status(500).json({ message: "Erro ao criar pedido", error: error.message });
+            return res.status(500).json({message: "Erro ao criar pedido", error: error.message});
         }
     },
 
@@ -46,7 +47,7 @@ const pedidoController = {
                 return res.json(result);
             }
         } catch (error) {
-            return res.status(500).json({ message: "Erro ao buscar pedidos", error: error.message });
+            return res.status(500).json({message: "Erro ao buscar pedidos", error: error.message});
         }
     },
 
@@ -60,7 +61,7 @@ const pedidoController = {
             if (!Status) {
                 Status = status;
             }
-
+            
             // Criamos o objeto do pedido apenas com o novo status e o ID correspondente
             const pedido = Pedido.editar({ subTotal: 0, status: Status, quantidade_itens: 0 }, id);
 
@@ -71,7 +72,7 @@ const pedidoController = {
 
         } catch (error) {
             console.error("Erro no controller do Back-end:", error);
-            return res.status(500).json({ message: "Erro ao atualizar pedido", error: error.message });
+            return res.status(500).json({message: "Erro ao atualizar pedido", error: error.message});
         }
     },
     //Deleta o pedido
@@ -79,10 +80,10 @@ const pedidoController = {
         try {
             const id = req.params.id; //Procura o id para poder excluir
             const result = await pedidoRepository.deletar(id);
-            return res.json({ message: "Pedido deletado com sucesso", result });
+            return res.json({message: "Pedido deletado com sucesso", result});
 
         } catch (error) {
-            return res.status(500).json({ message: "Erro ao deletar pedido", error: error.message });
+            return res.status(500).json({message: "Erro ao deletar pedido", error: error.message});
         }
     }
 };
