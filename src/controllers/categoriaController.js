@@ -9,6 +9,8 @@ const categoriaController = {
         try {
             const { nome, descricao } = req.body; //Pega o nome e a descrição enviados no body da requisição;
             const categoria = Categoria.criar({ nome, descricao });
+            
+            console.log("Dados recebidos no categoriaController:", { nome, descricao });
             const result = await categoriaRepository.criar(categoria);
             res.status(200).json({ result });
         } catch (error) {

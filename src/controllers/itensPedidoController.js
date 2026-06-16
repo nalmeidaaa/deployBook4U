@@ -28,6 +28,7 @@ const itensPedidoController = {
                 return res.status(400).json({ message: "Dados de entrada inválidos ou quantidade zerada." });
             }
 
+            console.log("Dados recebidos no controller de itensPedido:", { pedidoId, produtoId, quantidade });
             // LIMPEZA: Removeu-se a busca redundante de preço e o cálculo matemático daqui.
             // Passamos apenas as informações cruciais recebidas.
             const result = await itensPedidoRepository.criar({ pedidoId, produtoId, quantidade });
