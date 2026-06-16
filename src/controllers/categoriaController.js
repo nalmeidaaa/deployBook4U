@@ -14,7 +14,7 @@ const categoriaController = {
             res.status(200).json({ result });
         } catch (error) {
             console.error(error);
-            res.status(500).json({ MessageChannel: 'Ocorreu um erro no servidor', errorMessage: error.message }, ("Dados recebidos no categoriaController:", { nome, descricao }));
+            res.status(500).json({ MessageChannel: 'Ocorreu um erro no servidor', errorMessage: error.message });
             //MessageChannel é uma API do JavaScript usada para criar comunicação entre duas partes do código;
         }
     },

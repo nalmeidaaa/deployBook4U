@@ -18,7 +18,6 @@ const produtoController = {
             const caminho_imagem = req.file.filename;            
 
             const produto = Produto.criar({idCategoria, nome, descricao, preco, quantidade_estoque, caminho_imagem});
-            console.log("Dados recebidos no produtoController:", {idCategoria, nome, descricao, preco, quantidade_estoque, caminho_imagem});
 
             const result = await produtoRepository.criar(produto);
 

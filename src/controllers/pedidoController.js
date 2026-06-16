@@ -17,15 +17,12 @@ const pedidoController = {
             const itensPedido = ItensPedido.criar({ produtoId, quantidade, subTotal, valorItem });
 
 
-            const result = await pedidoRepository.criar(pedido, itensPedido);
-
             return res.status(201).json({
                 result,
             });
 
         } catch (error) {
-            return res.status(500).json({ message: "Erro ao criar pedido", error: error.message }, 
-            ("Dados recebidos no pedidoController:", { produtoId, quantidade, valorItem, subTotal, quantidade_itens }));
+            return res.status(500).json({ message: "Erro ao criar pedido", error: error.message });
         }
     },
 
