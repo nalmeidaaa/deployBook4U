@@ -1,7 +1,6 @@
 import mysql from 'mysql2/promise';
 import dotenv from 'dotenv';
 
-
 // Singleton para a conexão com o banco de dados
 class Database {
     static #instance = null;
@@ -44,7 +43,7 @@ export const connection = Database.getInstance().getPool();
 
 
 export async function initializeDatabase() {
-    console.log("Inicializando o banco de dados e tabelas...");
+    console.log("Inicializando o banco de dados e tabelas");
     try {
         const tempConnection = await mysql.createConnection({
             host: process.env.DB_HOST,
@@ -55,7 +54,7 @@ export async function initializeDatabase() {
         });
 
 
-        const dbName = process.env.DB_DATABASE || 'deploy';
+        const dbName = process.env.DB_DATABASE || 'S1_R3_R4';
 
 
         await tempConnection.query(`CREATE DATABASE IF NOT EXISTS \`${dbName}\`;`);
@@ -63,7 +62,7 @@ export async function initializeDatabase() {
 
 
         await tempConnection.query(`
-            CREATE TABLE IF NOT EXISTS categorias (
+            CREATE TABLE categorias (
                 id_categoria INT auto_increment PRIMARY KEY,
                 nome VARCHAR (50) NOT NULL,
                 descricao VARCHAR(100),
@@ -73,7 +72,7 @@ export async function initializeDatabase() {
 
 
         await tempConnection.query(`
-            CREATE TABLE IF NOT EXISTS produtos (
+            CREATE TABLE produtos (
                 id_produto INT AUTO_INCREMENT PRIMARY KEY,
                 nome VARCHAR(100) NOT NULL,
                 descricao VARCHAR (100),
@@ -87,26 +86,27 @@ export async function initializeDatabase() {
         `);
 
         await tempConnection.query(`
-            CREATE TABLE IF NOT EXISTSpedidos (
+            CREATE TABLE pedidos (
                 id_pedido INT AUTO_INCREMENT PRIMARY KEY,
                 subTotal DECIMAL (18,2) NOT NULL,
                 status ENUM ('Aberto', 'Finalizado', 'Pendente') NOT NULL,
                 quantidade_itens INT DEFAULT(0),
                 dataCad  TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             );
-        `);
+            
+            `)
 
         await tempConnection.query(`
-        CREATE TABLE IF NOT EXISTS itens_pedido (
-            idItem INT AUTO_INCREMENT PRIMARY KEY,
-            produtoId INT NOT NULL,
-            pedidoId INT NOT NULL,
-            quantidade DECIMAL(18,2) NOT NULL,
-            valorItem DECIMAL(18,2) NOT NULL,
-            FOREIGN KEY (produtoId) REFERENCES produtos(id_produto) ON DELETE CASCADE,
-            FOREIGN KEY (pedidoId) REFERENCES pedidos(id_pedido) ON DELETE CASCADE
-        );
-        `);
+            CREATE TABLE itens_pedido (
+                idItem INT AUTO_INCREMENT PRIMARY KEY,
+                produtoId INT NOT NULL,
+                pedidoId INT NOT NULL,
+                quantidade DECIMAL(18,2) NOT NULL,
+                valorItem DECIMAL(18,2) NOT NULL,
+                FOREIGN KEY (produtoId) REFERENCES produtos(id_produto) ON DELETE CASCADE,
+                FOREIGN KEY (pedidoId) REFERENCES pedidos(id_pedido) ON DELETE CASCADE
+            );
+            `)
 
 
         await tempConnection.end();
@@ -116,6 +116,5 @@ export async function initializeDatabase() {
         throw error;
     }
 }
-
 
 
