@@ -16,16 +16,16 @@ const pedidoController = {
             const pedido = Pedido.criar({ subTotal, status: statusPed.ABERTO, quantidade_itens }); //Ele começa com esses valores iniciais assim que o pedido é criado
             const itensPedido = ItensPedido.criar({ produtoId, quantidade, subTotal, valorItem });
 
-            console.log("Dados recebidos no pedidoController:", { produtoId, quantidade, valorItem, subTotal, quantidade_itens });
 
             const result = await pedidoRepository.criar(pedido, itensPedido);
 
             return res.status(201).json({
-                result
+                result,
             });
 
         } catch (error) {
-            return res.status(500).json({ message: "Erro ao criar pedido", error: error.message });
+            return res.status(500).json({ message: "Erro ao criar pedido", error: error.message }, 
+            ("Dados recebidos no pedidoController:", { produtoId, quantidade, valorItem, subTotal, quantidade_itens }));
         }
     },
 

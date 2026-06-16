@@ -10,12 +10,11 @@ const categoriaController = {
             const { nome, descricao } = req.body; //Pega o nome e a descrição enviados no body da requisição;
             const categoria = Categoria.criar({ nome, descricao });
             
-            console.log("Dados recebidos no categoriaController:", { nome, descricao });
             const result = await categoriaRepository.criar(categoria);
             res.status(200).json({ result });
         } catch (error) {
             console.error(error);
-            res.status(500).json({ MessageChannel: 'Ocorreu um erro no servidor', errorMessage: error.message });
+            res.status(500).json({ MessageChannel: 'Ocorreu um erro no servidor', errorMessage: error.message }, ("Dados recebidos no categoriaController:", { nome, descricao }));
             //MessageChannel é uma API do JavaScript usada para criar comunicação entre duas partes do código;
         }
     },
